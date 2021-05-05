@@ -2,6 +2,7 @@
 const cors = require('cors');
 const express = require('express');
 const expressJwt = require('express-jwt');
+const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const db = require('./db');
 //importing graphql utils
@@ -16,6 +17,7 @@ const jwtSecret = Buffer.from('Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt', 'base64');
 const app = express();
 app.use(
   cors(),
+  bodyParser.json(),
   expressJwt({
     secret: jwtSecret,
     credentialsRequired: false,
@@ -31,9 +33,8 @@ apolloServer.applyMiddleware({ app });
 
 //routes
 app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  const user = db.users.list().find(user => user.email === email);
-  if (!(user && user.password === password)) {
+  const user = db.users.list().find(user => user.email === req.body.email);
+  if (!(user && user.password === req.body.password)) {
     res.sendStatus(401);
     return;
   }
