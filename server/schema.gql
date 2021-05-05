@@ -17,4 +17,5 @@ type Company {
   id: ID!
   name: String
   description: String
+  jobs: [Job]
 }

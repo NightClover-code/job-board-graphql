@@ -19,6 +19,9 @@ const resolvers = {
   Job: {
     company: job => db.companies.get(job.companyId),
   },
+  Company: {
+    jobs: company => db.jobs.list().filter(job => job.companyId === company.id),
+  },
 };
 
 module.exports = { typeDefs, resolvers };
