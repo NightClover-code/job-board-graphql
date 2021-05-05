@@ -45,6 +45,7 @@ export const loadJob = async id => {
       job(id: $id) {
         id
         title
+        description
         company {
           id
           name

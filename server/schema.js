@@ -22,6 +22,9 @@ const resolvers = {
   Company: {
     jobs: company => db.jobs.list().filter(job => job.companyId === company.id),
   },
+  Mutation: {
+    createJob: (root, params) => db.jobs.create(params),
+  },
 };
 
 module.exports = { typeDefs, resolvers };
