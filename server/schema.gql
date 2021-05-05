@@ -1,5 +1,6 @@
 # queries
 type Query {
+  company(id: ID!): Company
   jobs: [Job]
   job(id: ID!): Job
 }

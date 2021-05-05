@@ -46,6 +46,7 @@ export const loadJob = async id => {
         id
         title
         company {
+          id
           name
           description
         }
@@ -54,4 +55,18 @@ export const loadJob = async id => {
   `;
   const { job } = await graphQLRequest(query, { id });
   return job;
+};
+
+export const loadCompany = async id => {
+  const query = `
+    query CompanyQuery($id: ID!) {
+      company(id: $id) {
+        id
+        name
+        description
+      }
+    }
+  `;
+  const { company } = await graphQLRequest(query, { id });
+  return company;
 };
