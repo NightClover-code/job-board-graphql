@@ -2,6 +2,7 @@ const URL = 'http://localhost:9000/graphql';
 
 //requests
 export const graphQLRequest = async (query, variables = {}) => {
+  //fetching graphql data
   const response = await fetch(URL, {
     method: 'POST',
     headers: {
@@ -13,6 +14,11 @@ export const graphQLRequest = async (query, variables = {}) => {
     }),
   });
   const responseBody = await response.json();
+  //checking for errors
+  if (responseBody.errors) {
+    const message = responseBody.errors.map(err => err.message).join('\n');
+    throw new Error(message);
+  }
   return responseBody.data;
 };
 
