@@ -14,6 +14,9 @@ const resolvers = {
   Query: {
     jobs: () => db.jobs.list(),
   },
+  Job: {
+    company: job => db.companies.get(job.companyId),
+  },
 };
 
 module.exports = { typeDefs, resolvers };
