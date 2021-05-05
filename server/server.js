@@ -4,6 +4,9 @@ const express = require('express');
 const expressJwt = require('express-jwt');
 const jwt = require('jsonwebtoken');
 const db = require('./db');
+//importing graphql utils
+const { ApolloServer } = require('apollo-server-express');
+const { typeDefs, resolvers } = require('./schema');
 
 //port && secret
 const PORT = 9000;
@@ -18,6 +21,13 @@ app.use(
     credentialsRequired: false,
   })
 );
+
+//init graphql server
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+apolloServer.applyMiddleware({ app });
 
 //routes
 app.post('/login', (req, res) => {
