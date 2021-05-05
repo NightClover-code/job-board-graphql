@@ -1,8 +1,19 @@
 const { gql } = require('apollo-server-express');
 const fs = require('fs');
+const db = require('./db');
 
 //type defs
-export const typeDefs = gql(fs.readFileSync('./schema.gql'));
+const typeDefs = gql(
+  fs.readFileSync('./schema.gql', {
+    encoding: 'utf-8',
+  })
+);
 
 //resolvers
-export const resolvers = {};
+const resolvers = {
+  Query: {
+    jobs: () => db.jobs.list(),
+  },
+};
+
+module.exports = { typeDefs, resolvers };
