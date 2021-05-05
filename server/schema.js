@@ -13,6 +13,7 @@ const typeDefs = gql(
 const resolvers = {
   Query: {
     jobs: () => db.jobs.list(),
+    job: (root, args) => db.jobs.get(args.id),
   },
   Job: {
     company: job => db.companies.get(job.companyId),
