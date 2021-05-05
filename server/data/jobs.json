@@ -18,9 +18,15 @@
     "description": "We are looking for a Full-Stack Developer familiar with Node.js, Express, and React."
   },
   {
-    "id": "H1idI_xuO",
+    "id": "ryNruOgdu",
     "companyId": "HJRa-DOuG",
     "title": "JAMStack Developer",
-    "description": "Passionated about JAMStack technologies"
+    "description": "Looking for an experienced JAMStack Developer"
+  },
+  {
+    "id": "r1oE9_ld_",
+    "companyId": "SJV0-wdOM",
+    "title": "MERN Developer",
+    "description": "Looking for an experienced MERN stack Developer"
   }
 ]

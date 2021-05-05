@@ -23,7 +23,10 @@ const resolvers = {
     jobs: company => db.jobs.list().filter(job => job.companyId === company.id),
   },
   Mutation: {
-    createJob: (root, params) => db.jobs.create(params),
+    createJob: (root, { input }) => {
+      const id = db.jobs.create(input);
+      return db.jobs.get(id);
+    },
   },
 };
 
