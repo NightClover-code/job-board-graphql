@@ -4,7 +4,7 @@ const db = require('./db');
 
 //type defs
 const typeDefs = gql(
-  fs.readFileSync('./schema.gql', {
+  fs.readFileSync('./schema.graphql', {
     encoding: 'utf-8',
   })
 );
