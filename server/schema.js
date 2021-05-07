@@ -23,7 +23,11 @@ const resolvers = {
     jobs: company => db.jobs.list().filter(job => job.companyId === company.id),
   },
   Mutation: {
-    createJob: (root, { input }) => {
+    createJob: (root, { input }, { user }) => {
+      //pereventing crud for unauth users
+      if (!user) {
+        throw new Error('Unauthorized');
+      }
       const id = db.jobs.create(input);
       return db.jobs.get(id);
     },

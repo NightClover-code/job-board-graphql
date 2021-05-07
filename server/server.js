@@ -28,6 +28,7 @@ app.use(
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => ({ user: req.user }),
 });
 apolloServer.applyMiddleware({ app });
 

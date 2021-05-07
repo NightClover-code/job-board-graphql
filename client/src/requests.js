@@ -1,9 +1,13 @@
+//importing auth utils
+import { getAccessToken, isLoggedIn } from './auth';
+
+//graphql server url
 const URL = 'http://localhost:9000/graphql';
 
 //requests
 export const graphQLRequest = async (query, variables = {}) => {
-  //fetching graphql data
-  const response = await fetch(URL, {
+  //request params
+  const request = {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -12,7 +16,13 @@ export const graphQLRequest = async (query, variables = {}) => {
       query,
       variables,
     }),
-  });
+  };
+  //authorizing authentificated users
+  if (isLoggedIn()) {
+    request.headers['authorization'] = 'Bearer ' + getAccessToken();
+  }
+  //fetching graphql data
+  const response = await fetch(URL, request);
   const responseBody = await response.json();
   //checking for errors
   if (responseBody.errors) {
