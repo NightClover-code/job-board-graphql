@@ -1,8 +1,15 @@
 //importing auth utils
 import { getAccessToken, isLoggedIn } from './auth';
-
+//importing apollo
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 //graphql server url
 const URL = 'http://localhost:9000/graphql';
+
+//setting upn apollo client
+const client = new ApolloClient({
+  link: new HttpLink({ uri: URL }),
+  cache: new InMemoryCache(),
+});
 
 //requests
 export const graphQLRequest = async (query, variables = {}) => {
