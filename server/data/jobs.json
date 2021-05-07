@@ -40,5 +40,17 @@
     "companyId": "SJV0-wdOM",
     "title": "Go Engineer",
     "description": "We're looking for an experienced go engineer\n"
+  },
+  {
+    "id": "HkEzkzfuu",
+    "title": "MERN Developer",
+    "description": "Looking for an experienced MERN stack Developer",
+    "companyId": "HJRa-DOuG"
+  },
+  {
+    "id": "SkfukGzd_",
+    "title": "Product Manager",
+    "description": "Give a product idea to devs or they'll get bored",
+    "companyId": "HJRa-DOuG"
   }
 ]
