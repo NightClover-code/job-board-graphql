@@ -31,7 +31,7 @@ const client = new ApolloClient({
 });
 
 //queries
-const jobQuery = gql`
+const companyQuery = gql`
   query CompanyQuery($id: ID!) {
     company(id: $id) {
       id
@@ -45,72 +45,76 @@ const jobQuery = gql`
   }
 `;
 
-//requests
-export const loadJobs = async () => {
-  const query = gql`
-    {
-      jobs {
+const jobQuery = gql`
+  query JobQuery($id: ID!) {
+    job(id: $id) {
+      id
+      title
+      description
+      company {
         id
-        title
-        company {
-          id
-          name
-        }
+        name
+        description
       }
     }
-  `;
+  }
+`;
+
+const jobsQuery = gql`
+  query JobsQuery {
+    jobs {
+      id
+      title
+      company {
+        id
+        name
+      }
+    }
+  }
+`;
+
+//mutations
+const createJobMutation = gql`
+  mutation CreateJob($input: CreateJobInput) {
+    job: createJob(input: $input) {
+      id
+      title
+      description
+      company {
+        id
+        name
+      }
+    }
+  }
+`;
+
+//requests
+export const loadJobs = async () => {
   const {
     data: { jobs },
-  } = await client.query({ query });
+  } = await client.query({ query: jobsQuery, fetchPolicy: 'no-cache' });
   return jobs;
 };
 
 export const loadJob = async id => {
-  const query = gql`
-    query JobQuery($id: ID!) {
-      job(id: $id) {
-        id
-        title
-        description
-        company {
-          id
-          name
-          description
-        }
-      }
-    }
-  `;
   const {
     data: { job },
-  } = await client.query({ variables: { id }, query });
+  } = await client.query({ variables: { id }, query: jobQuery });
   return job;
 };
 
 export const loadCompany = async id => {
   const {
     data: { company },
-  } = await client.query({ jobQuery, variables: { id } });
+  } = await client.query({ query: companyQuery, variables: { id } });
   return company;
 };
 
 export const createJob = async input => {
-  const mutation = gql`
-    mutation CreateJob($input: CreateJobInput) {
-      job: createJob(input: $input) {
-        id
-        title
-        description
-        company {
-          id
-          name
-        }
-      }
-    }
-  `;
   const {
     data: { job },
   } = await client.mutate({
-    mutation,
+    mutation: createJobMutation,
     variables: { input },
     //saving data to cache
     update: (cache, { data }) => {
