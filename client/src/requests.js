@@ -30,6 +30,19 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+//fragments
+const jobDetailFragment = gql`
+  fragment JobDetail on Job {
+    id
+    title
+    description
+    company {
+      id
+      name
+    }
+  }
+`;
+
 //queries
 const companyQuery = gql`
   query CompanyQuery($id: ID!) {
@@ -48,16 +61,10 @@ const companyQuery = gql`
 const jobQuery = gql`
   query JobQuery($id: ID!) {
     job(id: $id) {
-      id
-      title
-      description
-      company {
-        id
-        name
-        description
-      }
+      ...JobDetail
     }
   }
+  ${jobDetailFragment}
 `;
 
 const jobsQuery = gql`
@@ -77,15 +84,10 @@ const jobsQuery = gql`
 const createJobMutation = gql`
   mutation CreateJob($input: CreateJobInput) {
     job: createJob(input: $input) {
-      id
-      title
-      description
-      company {
-        id
-        name
-      }
+      ...JobDetail
     }
   }
+  ${jobDetailFragment}
 `;
 
 //requests
